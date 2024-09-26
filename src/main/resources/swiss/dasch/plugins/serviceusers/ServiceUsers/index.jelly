@@ -1,0 +1,40 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:l="/lib/layout" xmlns:f="/lib/form">
+  <l:layout title="${%Title}" permission="${app.ADMINISTER}">
+    <j:set var="descriptor" value="${it.descriptor}" />
+    <st:include page="sidepanel.jelly" it="${app}"/>
+    <l:main-panel>
+      <f:section title="${%AddNewServiceUser}">
+        <f:form action="addUser" method="post">
+          <f:entry title="${%User}" field="user">
+            <f:textbox/>
+          </f:entry>
+          <f:entry>
+            <f:submit name="add" value="${%Add}"/>
+          </f:entry>
+        </f:form>
+      </f:section>
+      <f:section title="${%ServiceUsers}">
+        <table class="sortable pane bigtable" style="width:75%; border-collapse: collapse;" border="1">
+          <tr>
+            <th>${%User}</th>
+            <th></th>
+          </tr>
+          <j:forEach var="user" items="${it.users}">
+            <tr>
+              <td>${user}</td>
+              <td>
+                <f:form action="removeUser" method="post">
+                  <input type="hidden" name="user" value="${user}"/>
+                  <f:entry>
+                    <f:submit name="remove" value="${%Remove}"/>
+                  </f:entry>
+                </f:form>
+              </td>
+            </tr>
+          </j:forEach>
+        </table>
+      </f:section>
+    </l:main-panel>
+  </l:layout>
+</j:jelly>
