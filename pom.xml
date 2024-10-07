@@ -17,9 +17,11 @@
     <packaging>hpi</packaging>
 
     <properties>
-        <revision>1.0</revision>
+        <revision>1.1</revision>
 
         <jenkins.version>2.332.4</jenkins.version>
+
+        <useBeta>true</useBeta>
 
         <java.level>8</java.level>
     </properties>

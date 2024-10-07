@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.PatternSyntaxException;
 
+import javax.annotation.Nullable;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
 
@@ -49,6 +50,8 @@ public class ServiceUsers extends GlobalConfiguration implements RootAction {
 
 	@DataBoundSetter
 	public synchronized void setUsers(List<String> users) {
+		Jenkins.get().checkPermission(Jenkins.ADMINISTER);
+
 		Set<String> prevUsers = new LinkedHashSet<>(this.serviceUsers);
 
 		Set<String> newUsers = new LinkedHashSet<>(users);
@@ -71,6 +74,8 @@ public class ServiceUsers extends GlobalConfiguration implements RootAction {
 	}
 
 	public synchronized boolean addUsers(Collection<String> users) {
+		Jenkins.get().checkPermission(Jenkins.ADMINISTER);
+
 		boolean added = false;
 
 		for (String user : users) {
@@ -94,11 +99,45 @@ public class ServiceUsers extends GlobalConfiguration implements RootAction {
 		return added;
 	}
 
+	public boolean setGroups(String user, List<String> groups) {
+		Jenkins.get().checkPermission(Jenkins.ADMINISTER);
+
+		User u = User.getById(user, false);
+
+		if (u != null) {
+			ServiceUserProperty property = u.getProperty(ServiceUserProperty.class);
+
+			if (property != null) {
+				return property.setRoles(groups);
+			}
+		}
+
+		return false;
+	}
+
+	public boolean setApiToken(String user, String name, @Nullable String token) {
+		Jenkins.get().checkPermission(Jenkins.ADMINISTER);
+
+		User u = User.getById(user, false);
+
+		if (u != null) {
+			ServiceUserProperty property = u.getProperty(ServiceUserProperty.class);
+
+			if (property != null) {
+				return property.setApiToken(name, token);
+			}
+		}
+
+		return false;
+	}
+
 	public boolean removeUser(String user) {
 		return this.removeUsers(Collections.singletonList(user));
 	}
 
 	public synchronized boolean removeUsers(Collection<String> users) {
+		Jenkins.get().checkPermission(Jenkins.ADMINISTER);
+
 		boolean changed = false;
 
 		for (String user : users) {
@@ -130,6 +169,8 @@ public class ServiceUsers extends GlobalConfiguration implements RootAction {
 	}
 
 	public synchronized boolean removeUsersByPattern(String pattern, Collection<String> except) {
+		Jenkins.get().checkPermission(Jenkins.ADMINISTER);
+
 		Set<String> exceptSet = new HashSet<>(except);
 
 		List<String> remove = new ArrayList<>();
@@ -159,6 +200,8 @@ public class ServiceUsers extends GlobalConfiguration implements RootAction {
 	}
 
 	private boolean createOrUpdateUser(String userId, SecurityRealm securityRealm) {
+		Jenkins.get().checkPermission(Jenkins.ADMINISTER);
+
 		this.checkExistingUser(userId);
 
 		User user = null;
