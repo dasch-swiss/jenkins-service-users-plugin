@@ -14,6 +14,11 @@ public class ServiceUsersLink extends ManagementLink {
 	}
 
 	@Override
+	public String getDescription() {
+		return Messages.ServiceUsersLink_Description();
+	}
+
+	@Override
 	public String getIconFileName() {
 		if (!Jenkins.get().hasPermission(Jenkins.ADMINISTER)) {
 			return null;
@@ -26,7 +31,7 @@ public class ServiceUsersLink extends ManagementLink {
 		if (!Jenkins.get().hasPermission(Jenkins.ADMINISTER)) {
 			return null;
 		}
-		return ServiceUsers.get().getUrlName();
+		return ServiceUsersConfig.get().getUrlName();
 	}
 
 	@Override

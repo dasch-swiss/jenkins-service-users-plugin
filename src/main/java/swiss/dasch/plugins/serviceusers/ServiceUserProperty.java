@@ -24,7 +24,7 @@ import jenkins.security.ApiTokenProperty;
  */
 public class ServiceUserProperty extends UserProperty {
 
-	private static final Logger LOGGER = Logger.getLogger(ServiceUsers.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(ServiceUserProperty.class.getName());
 
 	private List<String> roles;
 

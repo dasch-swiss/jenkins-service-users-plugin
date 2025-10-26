@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.jenkins-ci.plugins</groupId>
         <artifactId>plugin</artifactId>
-        <version>4.41</version>
+        <version>5.6</version>
         <relativePath />
     </parent>
 
@@ -17,13 +17,12 @@
     <packaging>hpi</packaging>
 
     <properties>
-        <revision>1.1</revision>
+        <revision>2.0</revision>
 
-        <jenkins.version>2.332.4</jenkins.version>
+        <jenkins.baseline>2.479</jenkins.baseline>
+        <jenkins.version>${jenkins.baseline}.1</jenkins.version>
 
         <useBeta>true</useBeta>
-
-        <java.level>8</java.level>
     </properties>
 
     <repositories>
@@ -44,8 +43,8 @@
             <dependency>
                 <!-- Pick up common dependencies for the selected LTS line: https://github.com/jenkinsci/bom#usage -->
                 <groupId>io.jenkins.tools.bom</groupId>
-                <artifactId>bom-2.332.x</artifactId>
-                <version>1451.v15f1fdb_772a_f</version>
+                <artifactId>bom-${jenkins.baseline}.x</artifactId>
+                <version>4023.va_eeb_b_4e45f07</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -58,6 +57,10 @@
             <artifactId>structs</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.jenkins-ci.plugins</groupId>
+            <artifactId>script-security</artifactId>
+        </dependency>
+        <dependency>
             <groupId>io.jenkins</groupId>
             <artifactId>configuration-as-code</artifactId>
             <scope>test</scope>
@@ -65,7 +68,7 @@
         <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
             <artifactId>authorize-project</artifactId>
-            <version>1.4.0</version>
+            <version>2.0.0</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
